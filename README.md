@@ -1,6 +1,6 @@
-### Ressources
-- [Summary](https://github.com/xymon-monitoring/problem-solving/issues/1)
-- [All issues](https://github.com/xymon-monitoring/problem-solving/issues)
+### Main Links
+- [Summary of problems](https://github.com/xymon-monitoring/problem-solving/issues/1)
+- [All problems](https://github.com/xymon-monitoring/problem-solving/issues)
 
 ### Goal
 - Inventory all problems
