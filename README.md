@@ -4,6 +4,6 @@
   -  That are not in any other place so far
 - Starting point to follow any problema
 
-
-See Summary [all issues](https://github.com/xymon-monitoring/problem-solving/issues)
-See [all issues](https://github.com/xymon-monitoring/problem-solving/issues)
+### Ressources
+- [Summary](https://github.com/xymon-monitoring/problem-solving/issues/1)
+- [All issues](https://github.com/xymon-monitoring/problem-solving/issues)
