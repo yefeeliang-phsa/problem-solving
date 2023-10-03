@@ -10,7 +10,7 @@
 
 ### How
 - By listing problems and orginized them
-- By letting anyone create new problem
+- By letting anyone create new problem/issue: in  the summmary or directly in issues
 - By creating a list for each category of problems
 - A checkbox is use to say that "there is nothing more to do in the summary" for this Issue (can change in the future)
   - As it is just a ref to another issue/document  
