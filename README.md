@@ -14,8 +14,8 @@ This is a POC, that just tries to help Xymon
 - By letting anyone create new problem/issue: in  the summmary or directly in issues
 - By creating a list for each category of problems
 - A checkbox is used to say that "there is nothing more to do in the summary" for this Issue 
-  - This the case if there is a Ref to specific issue 
+  - This the case if there is a Ref to a specific issue 
   - Can be changed in the near future as: I like it, but it is not very usefull: would like to try a more usefull meaning
 - Split a category in 2, if it has more than 10 elements 
-- Try to order by priority
-- Recurrent work: create a new specific issue, refine the issue, add new issue, remove closed issue (list), consolidate info
+- Try to order by priority or importance
+- Recurrent work: create a specific issues, refine issues, add new issue, remove closed issue (list), consolidate info
