@@ -1,9 +1,10 @@
-This is a POC, that just tries to help Xymon
-### Xymon difficult problems follow up
+This is a POC, that just tries to help Xymon (see goals)
+
+### Xymon problems
 - [Summary of problems](https://github.com/xymon-monitoring/problem-solving/issues/1)
 - [All problems](https://github.com/xymon-monitoring/problem-solving/issues)
 
-### Goal of this repo
+### Goals of this repo
 - To inventory some problems  
   -  **That do not fit well in any other repos**
   -  **That are not in any other place so far**
