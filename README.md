@@ -1,4 +1,4 @@
-This is a POC, that just tries to help Xymon (see goals)
+This is a POC, that just tries to help Xymon (see "goals of this repo" below)
 
 ### Xymon problems
 - [Summary of problems](https://github.com/xymon-monitoring/problem-solving/issues/1)
