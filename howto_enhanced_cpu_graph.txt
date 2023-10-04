@@ -1,0 +1,96 @@
+title:    howto_enhanced_cpu_graph.txt 
+
+summary:  enhanced cpu utilization graph (added IO wait, better color - can view in b/w nicely!)
+
+## on server 
+1.  etc/graphs.cfg
+
+2.  etc/xymonserver.cfg 
+
+
+## per client 
+3.  modify  client stats generator :  client/bin/xymonclient-linux.sh   (OS distro dependent!) 
+
+4.  add extension : client/ext/vmstat2.sh
+
+5.  add to client launch : client/etc/clientlaunch.cfg
+
+# ---------------------------------------------------------------------------------------
+1a.
+[vmstat2]
+        TITLE CPU Utilization
+        YAXIS % Load
+        -u 100
+        -l 0
+        -r
+        DEF:cpu_usr=vmstat2.rrd:cpuusr:AVERAGE
+        DEF:cpu_sys=vmstat2.rrd:cpusys:AVERAGE
+        DEF:cpu_idl=vmstat2.rrd:cpuidl:AVERAGE
+        DEF:cpu_wai=vmstat2.rrd:cpuwai:AVERAGE
+        AREA:cpu_usr#9999FF:User
+        STACK:cpu_sys#FF0000:System
+        STACK:cpu_wai#FFFF00:I/O Wait
+        STACK:cpu_idl#C0C0C0:Idle
+        COMMENT:\n
+        GPRINT:cpu_usr:LAST:User    \: %5.1lf (cur)
+        GPRINT:cpu_usr:MAX: \: %5.1lf (max)
+        GPRINT:cpu_usr:MIN: \: %5.1lf (min)
+        GPRINT:cpu_usr:AVERAGE: \: %5.1lf (avg)\n
+        GPRINT:cpu_sys:LAST:System  \: %5.1lf (cur)
+        GPRINT:cpu_sys:MAX: \: %5.1lf (max)
+        GPRINT:cpu_sys:MIN: \: %5.1lf (min)
+        GPRINT:cpu_sys:AVERAGE: \: %5.1lf (avg)\n
+        GPRINT:cpu_wai:LAST:I/O Wait\: %5.1lf (cur)
+        GPRINT:cpu_wai:MAX: \: %5.1lf (max)
+        GPRINT:cpu_wai:MIN: \: %5.1lf (min)
+        GPRINT:cpu_wai:AVERAGE: \: %5.1lf (avg)\n
+        GPRINT:cpu_idl:LAST:Idle    \: %5.1lf (cur)
+        GPRINT:cpu_idl:MAX: \: %5.1lf (max)
+        GPRINT:cpu_idl:MIN: \: %5.1lf (min)
+        GPRINT:cpu_idl:AVERAGE: \: %5.1lf (avg)\n
+
+2a.  add vmstat2 to xymonserver.cfg 
+NCV_vmstat2="cpuusr:GAUGE,cpusys:GAUGE,cpuidl:GAUGE,cpuwai:GAUGE"
+
+TEST2RRD="vmstat2=ncv,vmstat,cpu=la,memory,disk,qtree,$PINGCOLUMN=tcp,http=tcp,dns=tcp,dig=tcp,time=ntpstat,iostat,netstat,....."
+
+GRAPHS="vmstat2,vmstat,la,memory,disk,qtree,files,processes,users,iostat,....."
+
+
+3a.	Modify vmstat output 
+# vmstat
+nohup sh -c "vmstat 300 2 1>$XYMONTMP/xymon_vmstat.$MACHINEDOTS.$$ 2>&1; mv $XYMONTMP/xymon_vmstat.$MACHINEDOTS.$$ $XYMONTMP/xymon_vmstat.$MACHINEDOTS" </dev/null >/dev/null 2>&1 &
+sleep 5
+
+if [ -f $XYMONTMP/xymon_vmstat.$MACHINEDOTS ]; then
+   echo "[vmstat]"; cat $XYMONTMP/xymon_vmstat.$MACHINEDOTS
+   cat $XYMONTMP/xymon_vmstat.$MACHINEDOTS > $XYMONTMP/xymon_vmstat.CURRENT
+   rm -f $XYMONTMP/xymon_vmstat.$MACHINEDOTS
+fi
+
+exit
+
+
+4a.
+#!/bin/sh
+
+data="`tail -1 $XYMONTMP/xymon_vmstat.CURRENT`"
+echo "$data" | awk '{print "cpuusr : " $13 }'  > $XYMONTMP/vmstat2.CURRENT
+echo "$data" | awk '{print "cpusys : " $14 }' >> $XYMONTMP/vmstat2.CURRENT
+echo "$data" | awk '{print "cpuidl : " $15 }' >> $XYMONTMP/vmstat2.CURRENT
+echo "$data" | awk '{print "cpuwai : " $16 }' >> $XYMONTMP/vmstat2.CURRENT
+
+$XYMON $XYMSRV "status $MACHINE.vmstat2 green `date`
+
+`cat $XYMONTMP/vmstat2.CURRENT`
+"
+
+exit 0
+
+
+5a.
+[vmstat2]
+        ENVFILE $XYMONCLIENTHOME/etc/xymonclient.cfg
+        CMD $XYMONCLIENTHOME/ext/vmstat2.sh
+        INTERVAL 5m
+
