@@ -1,4 +1,6 @@
-This is a POC, that just tries to help Xymon (see "goals of this repo" below)
+This is a POC so far, that just tries to help Xymon 
+- See "Goals of this repo" and "Remarks" below
+
 
 ### Xymon problems
 - [Summary of problems](https://github.com/xymon-monitoring/problem-solving/issues/1)
@@ -24,3 +26,7 @@ This is a POC, that just tries to help Xymon (see "goals of this repo" below)
 - A checkbox is used to say that "there is nothing more to do in the summary" for this Issue 
   - This the case if there is a Ref to a specific issue 
   - Can be changed in the near future as: I like it, but it is not very usefull: would like to try a more usefull meaning
+ 
+### Remarks
+- This Github organization is not official in the Xymon Ecosystem
+- Content is based on the current (2023) Mailman mailing list, but is not validated by a Xymon admins or partially only
